@@ -3,8 +3,7 @@ import java.util.Scanner;
 public class arreglos {
 
     private static double[][] ventas = new double[12][3];
-    private static String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+    private static String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
     private static String[] departamentos = {"Ropa", "Deportes", "Juguetería"};
 
     public static void insertarVenta(int mes, int depto, double monto) {
