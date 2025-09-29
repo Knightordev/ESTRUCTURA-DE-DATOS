@@ -23,11 +23,11 @@ class Pilas:
         else:
             return None
 
-# ---------------- INTERFAZ GRÁFICA ----------------
+
 def actualizar_pila():
     """Actualiza la vista de la pila en la interfaz"""
     lista.delete(0, tk.END)
-    for elem in reversed(pilaUno.pila):  # se muestra de arriba hacia abajo
+    for elem in reversed(pilaUno.pila):
         lista.insert(tk.END, elem)
 
 def apilar():
@@ -54,18 +54,17 @@ def ver_cima():
     else:
         messagebox.showerror("Error", "La pila está vacía")
 
-# Crear objeto pila
+
 pilaUno = Pilas()
 
-# Ventana principal
+
 root = tk.Tk()
 root.title("Simulación de Pila")
 
-# Entrada de texto
+
 entry = tk.Entry(root, width=20)
 entry.pack(pady=5)
 
-# Botones
 btn_push = tk.Button(root, text="Apilar", command=apilar)
 btn_push.pack(pady=2)
 
@@ -75,7 +74,7 @@ btn_pop.pack(pady=2)
 btn_peek = tk.Button(root, text="Ver cima", command=ver_cima)
 btn_peek.pack(pady=2)
 
-# Lista para mostrar pila
+
 lista = tk.Listbox(root, height=10, width=30)
 lista.pack(pady=10)
 
