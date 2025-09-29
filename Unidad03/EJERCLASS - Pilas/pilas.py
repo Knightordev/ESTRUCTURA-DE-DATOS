@@ -20,10 +20,10 @@ class pilas():
         else:
             return "pila is empty"
         
-pila  = pilas()
-pila.push(1)
-pila.push(2)
-pila.push(3)
-pila.pop_pila()
-pila.peek()
-print(pila.pila)
+pilaUno  = pilas()
+pilaUno.push(1)
+pilaUno.push(2)
+pilaUno.push(3)
+pilaUno.pop_pila()
+pilaUno.peek()
+print(pilaUno.pila)
