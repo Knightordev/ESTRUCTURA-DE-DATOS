@@ -27,14 +27,11 @@ class ArbolBinarioBusqueda:
 
     # [2] Buscar
     def buscar(self, dato):
-        nodo = self.raiz
-        while nodo:
-            if dato == nodo.dato:
+        n = self.raiz
+        while n:
+            if dato == n.dato:
                 return True
-            elif dato < nodo.dato:
-                nodo = nodo.izq
-            else:
-                nodo = nodo.der
+            n = n.izq if dato < n.dato else n.der
         return False
 
     # [3] Eliminar
@@ -44,120 +41,98 @@ class ArbolBinarioBusqueda:
                 n = n.izq
             return n
 
-        def _eliminar(nodo, dato):
-            if not nodo:
-                return nodo
-            if dato < nodo.dato:
-                nodo.izq = _eliminar(nodo.izq, dato)
-            elif dato > nodo.dato:
-                nodo.der = _eliminar(nodo.der, dato)
+        def _elim(n, dato):
+            if not n:
+                return n
+            if dato < n.dato:
+                n.izq = _elim(n.izq, dato)
+            elif dato > n.dato:
+                n.der = _elim(n.der, dato)
             else:
-                if nodo.izq is None:
-                    return nodo.der
-                elif nodo.der is None:
-                    return nodo.izq
-                temp = _minimo(nodo.der)
-                nodo.dato = temp.dato
-                nodo.der = _eliminar(nodo.der, temp.dato)
-            return nodo
-        self.raiz = _eliminar(self.raiz, dato)
+                if n.izq is None:
+                    return n.der
+                if n.der is None:
+                    return n.izq
+                temp = _minimo(n.der)
+                n.dato = temp.dato
+                n.der = _elim(n.der, temp.dato)
+            return n
+        self.raiz = _elim(self.raiz, dato)
 
-    # [4] Recorridos
-    def preOrden(self):
-        resultado = []
-        def _pre(n):
-            if n:
-                resultado.append(n.dato)
-                _pre(n.izq)
-                _pre(n.der)
-        _pre(self.raiz)
-        return resultado
-
-    def inOrden(self):
-        resultado = []
-        def _in(n):
-            if n:
-                _in(n.izq)
-                resultado.append(n.dato)
-                _in(n.der)
-        _in(self.raiz)
-        return resultado
-
-    def postOrden(self):
-        resultado = []
-        def _post(n):
-            if n:
-                _post(n.izq)
-                _post(n.der)
-                resultado.append(n.dato)
-        _post(self.raiz)
-        return resultado
-
-    # [5] Altura
+    # [4] Altura
     def altura(self):
-        def _altura(n):
+        def _alt(n):
             if n is None:
                 return 0
-            return 1 + max(_altura(n.izq), _altura(n.der))
-        return _altura(self.raiz)
+            return 1 + max(_alt(n.izq), _alt(n.der))
+        return _alt(self.raiz)
 
-    # [6] Contar hojas
+    # [5] Contar hojas
     def contarHojas(self):
         def _hojas(n):
             if n is None:
                 return 0
-            if n.izq is None and n.der is None:
+            if not n.izq and not n.der:
                 return 1
             return _hojas(n.izq) + _hojas(n.der)
         return _hojas(self.raiz)
 
-    # [7] Contar nodos
+    # [6] Contar nodos
     def contarNodos(self):
-        def _nodos(n):
+        def _n(n):
             if n is None:
                 return 0
-            return 1 + _nodos(n.izq) + _nodos(n.der)
-        return _nodos(self.raiz)
+            return 1 + _n(n.izq) + _n(n.der)
+        return _n(self.raiz)
 
-    # [8] Árbol completo
+    # [7] Es completo
     def esCompleto(self):
-        if self.raiz is None:
+        if not self.raiz:
             return True
         cola = deque([self.raiz])
-        encontrado_vacio = False
+        vacio = False
         while cola:
-            nodo = cola.popleft()
-            if nodo:
-                if encontrado_vacio:
+            n = cola.popleft()
+            if n:
+                if vacio:
                     return False
-                cola.append(nodo.izq)
-                cola.append(nodo.der)
+                cola.append(n.izq)
+                cola.append(n.der)
             else:
-                encontrado_vacio = True
+                vacio = True
         return True
 
-    # [9] Árbol lleno
+    # [8] Es lleno
     def esLleno(self):
-        def _lleno(n):
+        def _ll(n):
             if n is None:
                 return True
             if (n.izq is None) != (n.der is None):
                 return False
-            return _lleno(n.izq) and _lleno(n.der)
-        return _lleno(self.raiz)
+            return _ll(n.izq) and _ll(n.der)
+        return _ll(self.raiz)
 
-    # [10] Eliminar árbol completo
+    # [9] Calcular grados de cada nodo
+    def grados(self):
+        grados_dict = {}
+        def _gr(n):
+            if n:
+                grado = int(n.izq is not None) + int(n.der is not None)
+                grados_dict[n.dato] = grado
+                _gr(n.izq)
+                _gr(n.der)
+        _gr(self.raiz)
+        return grados_dict
+
+    # [10] Eliminar todo
     def eliminarArbol(self):
         self.raiz = None
 
 
-# ------------------------------------------------------------
-# CLASE INTERFAZ GRÁFICA
-# ------------------------------------------------------------
 class ArbolApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Árbol Binario de Búsqueda (ABB)")
+        self.root.title("Árbol Binario de Búsqueda (ABB) con grados")
         self.root.geometry("1000x700")
         self.root.configure(bg="#f5f5f5")
 
@@ -175,47 +150,40 @@ class ArbolApp:
         tk.Button(frame, text="Eliminar", command=self.eliminar, bg="#ffb74d", font=("Arial", 11)).grid(row=0, column=4, padx=5)
         tk.Button(frame, text="Limpiar", command=self.limpiar, bg="#e57373", font=("Arial", 11)).grid(row=0, column=5, padx=5)
 
-        tk.Button(frame, text="PreOrden", command=self.preorden, font=("Arial", 11)).grid(row=1, column=2, padx=5, pady=5)
-        tk.Button(frame, text="InOrden", command=self.inorden, font=("Arial", 11)).grid(row=1, column=3, padx=5, pady=5)
-        tk.Button(frame, text="PostOrden", command=self.postorden, font=("Arial", 11)).grid(row=1, column=4, padx=5, pady=5)
-        tk.Button(frame, text="Altura", command=self.altura, font=("Arial", 11)).grid(row=2, column=2, padx=5, pady=5)
-        tk.Button(frame, text="Hojas", command=self.hojas, font=("Arial", 11)).grid(row=2, column=3, padx=5, pady=5)
-        tk.Button(frame, text="Nodos", command=self.nodos, font=("Arial", 11)).grid(row=2, column=4, padx=5, pady=5)
-        tk.Button(frame, text="¿Completo?", command=self.completo, bg="#fff59d", font=("Arial", 11)).grid(row=3, column=2, padx=5, pady=5)
-        tk.Button(frame, text="¿Lleno?", command=self.lleno, bg="#ce93d8", font=("Arial", 11)).grid(row=3, column=3, padx=5, pady=5)
+        tk.Button(frame, text="Altura", command=self.altura, font=("Arial", 11)).grid(row=1, column=2, padx=5, pady=5)
+        tk.Button(frame, text="Hojas", command=self.hojas, font=("Arial", 11)).grid(row=1, column=3, padx=5, pady=5)
+        tk.Button(frame, text="Nodos", command=self.nodos, font=("Arial", 11)).grid(row=1, column=4, padx=5, pady=5)
+        tk.Button(frame, text="¿Completo?", command=self.completo, bg="#fff59d", font=("Arial", 11)).grid(row=2, column=2, padx=5, pady=5)
+        tk.Button(frame, text="¿Lleno?", command=self.lleno, bg="#ce93d8", font=("Arial", 11)).grid(row=2, column=3, padx=5, pady=5)
+        tk.Button(frame, text="Grados", command=self.grados, bg="#90caf9", font=("Arial", 11)).grid(row=2, column=4, padx=5, pady=5)
 
         self.canvas = tk.Canvas(self.root, bg="white", width=950, height=500)
         self.canvas.pack(pady=10)
 
-    # -----------------------------
-    # FUNCIONES DE INTERFAZ
-    # -----------------------------
     def insertar(self):
         try:
-            valor = int(self.entry.get())
+            v = int(self.entry.get())
             self.entry.delete(0, tk.END)
-            self.arbol.insertar(valor)
-            self.dibujar_arbol()
+            self.arbol.insertar(v)
+            self.dibujar()
         except ValueError:
             messagebox.showerror("Error", "Ingrese un número válido.")
 
     def buscar(self):
         try:
-            valor = int(self.entry.get())
+            v = int(self.entry.get())
             self.entry.delete(0, tk.END)
-            if self.arbol.buscar(valor):
-                messagebox.showinfo("Resultado", f"El valor {valor} SÍ está en el árbol.")
-            else:
-                messagebox.showwarning("Resultado", f"El valor {valor} NO se encuentra.")
+            msg = f"✅ El valor {v} está en el árbol." if self.arbol.buscar(v) else f"❌ El valor {v} no se encuentra."
+            messagebox.showinfo("Buscar", msg)
         except ValueError:
             messagebox.showerror("Error", "Ingrese un número válido.")
 
     def eliminar(self):
         try:
-            valor = int(self.entry.get())
+            v = int(self.entry.get())
             self.entry.delete(0, tk.END)
-            self.arbol.eliminar(valor)
-            self.dibujar_arbol()
+            self.arbol.eliminar(v)
+            self.dibujar()
         except ValueError:
             messagebox.showerror("Error", "Ingrese un número válido.")
 
@@ -223,58 +191,56 @@ class ArbolApp:
         self.arbol.eliminarArbol()
         self.canvas.delete("all")
 
-    def preorden(self):
-        recorrido = self.arbol.preOrden()
-        messagebox.showinfo("PreOrden", f"Recorrido: {recorrido}")
-
-    def inorden(self):
-        recorrido = self.arbol.inOrden()
-        messagebox.showinfo("InOrden", f"Recorrido: {recorrido}")
-
-    def postorden(self):
-        recorrido = self.arbol.postOrden()
-        messagebox.showinfo("PostOrden", f"Recorrido: {recorrido}")
-
     def altura(self):
         h = self.arbol.altura()
         messagebox.showinfo("Altura", f"Altura del árbol: {h}")
 
     def hojas(self):
-        c = self.arbol.contarHojas()
-        messagebox.showinfo("Hojas", f"Cantidad de hojas: {c}")
+        h = self.arbol.contarHojas()
+        messagebox.showinfo("Hojas", f"Cantidad de hojas: {h}")
 
     def nodos(self):
-        c = self.arbol.contarNodos()
-        messagebox.showinfo("Nodos", f"Cantidad total de nodos: {c}")
+        n = self.arbol.contarNodos()
+        messagebox.showinfo("Nodos", f"Cantidad total de nodos: {n}")
 
     def completo(self):
         es = self.arbol.esCompleto()
-        messagebox.showinfo("Árbol Completo", "✅ Es un árbol completo" if es else "❌ No es un árbol completo")
+        messagebox.showinfo("Árbol completo", "✅ Es completo" if es else "❌ No es completo")
 
     def lleno(self):
         es = self.arbol.esLleno()
-        messagebox.showinfo("Árbol Lleno", "✅ Es un árbol lleno" if es else "❌ No es un árbol lleno")
+        messagebox.showinfo("Árbol lleno", "✅ Es lleno" if es else "❌ No es lleno")
+
+    def grados(self):
+        g = self.arbol.grados()
+        texto = "\n".join([f"Nodo {k}: grado {v}" for k, v in g.items()])
+        if not texto:
+            texto = "Árbol vacío"
+        messagebox.showinfo("Grados de los nodos", texto)
 
     # -----------------------------
     # DIBUJAR ÁRBOL
     # -----------------------------
-    def dibujar_arbol(self):
+    def dibujar(self):
         self.canvas.delete("all")
         if not self.arbol.raiz:
             return
 
-        def _dibujar(nodo, x, y, dx):
-            if nodo is None:
+        def _dibujar(n, x, y, dx):
+            if n is None:
                 return
             r = 20
-            if nodo.izq:
+            if n.izq:
                 self.canvas.create_line(x, y, x - dx, y + 80, width=2)
-                _dibujar(nodo.izq, x - dx, y + 80, dx / 1.8)
-            if nodo.der:
+                _dibujar(n.izq, x - dx, y + 80, dx / 1.8)
+            if n.der:
                 self.canvas.create_line(x, y, x + dx, y + 80, width=2)
-                _dibujar(nodo.der, x + dx, y + 80, dx / 1.8)
+                _dibujar(n.der, x + dx, y + 80, dx / 1.8)
+
             self.canvas.create_oval(x - r, y - r, x + r, y + r, fill="#64b5f6", outline="black", width=2)
-            self.canvas.create_text(x, y, text=str(nodo.dato), font=("Arial", 12, "bold"))
+            grado = int(n.izq is not None) + int(n.der is not None)
+            self.canvas.create_text(x, y, text=str(n.dato), font=("Arial", 12, "bold"))
+            self.canvas.create_text(x, y + 30, text=f"G={grado}", font=("Arial", 9))
 
         _dibujar(self.arbol.raiz, 475, 50, 200)
 
