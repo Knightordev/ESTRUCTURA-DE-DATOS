@@ -1,14 +1,6 @@
-# ============================================================
-#   gestor_postres.py
-#   Programa principal (Tkinter)
-# ============================================================
 
 import tkinter as tk
 from tkinter import messagebox
-
-# ------------------------------------------------------------
-#   CLASES DE ESTRUCTURA DE DATOS
-# ------------------------------------------------------------
 
 class NodoIngrediente:
     def __init__(self, nombre):
@@ -62,9 +54,7 @@ class Postre:
         self.ingredientes = ListaIngredientes()
 
 
-# ------------------------------------------------------------
-#   APLICACIÓN GRÁFICA (TKINTER)
-# ------------------------------------------------------------
+
 
 class App:
     def __init__(self, root):
@@ -73,18 +63,18 @@ class App:
         self.root.geometry("680x450")
         self.root.config(bg="#fef9f3")
 
-        # Lista principal
+
         self.postres = []
 
-        # --- Título ---
+
         tk.Label(root, text="Gestor de Postres y sus Ingredientes",
                  font=("Arial", 16, "bold"), bg="#fef9f3", fg="#7a4b24").pack(pady=10)
 
-        # --- Marco principal ---
+
         marco = tk.Frame(root, bg="#fff5eb", bd=2, relief="groove")
         marco.pack(padx=20, pady=10, fill="both", expand=True)
 
-        # --- Campos de texto ---
+
         tk.Label(marco, text="Nombre del Postre:", bg="#fff5eb").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         self.entry_postre = tk.Entry(marco, width=25)
         self.entry_postre.grid(row=0, column=1, pady=5)
@@ -93,7 +83,7 @@ class App:
         self.entry_ingrediente = tk.Entry(marco, width=25)
         self.entry_ingrediente.grid(row=1, column=1, pady=5)
 
-        # --- Botones ---
+
         boton_frame = tk.Frame(marco, bg="#fff5eb")
         boton_frame.grid(row=2, column=0, columnspan=2, pady=10)
 
@@ -103,17 +93,14 @@ class App:
         tk.Button(boton_frame, text="Eliminar Ingrediente", command=self.eliminar_ingrediente, bg="#dcedc1").grid(row=0, column=3, padx=5)
         tk.Button(boton_frame, text="Mostrar Ingredientes", command=self.mostrar_ingredientes, bg="#c4fcef").grid(row=0, column=4, padx=5)
 
-        # --- Lista visual de postres ---
+
         tk.Label(marco, text="Lista de Postres (A-Z):", bg="#fff5eb", font=("Arial", 10, "bold")).grid(row=3, column=0, columnspan=2)
         self.lista_postres = tk.Listbox(marco, width=55, height=10)
         self.lista_postres.grid(row=4, column=0, columnspan=2, pady=5)
 
-        # --- Pie ---
         tk.Label(root, text="Hecho con 💛 en Python y Tkinter", bg="#fef9f3", fg="#7a4b24", font=("Arial", 9, "italic")).pack(pady=5)
 
-    # ------------------------------------------------------------
-    #   FUNCIONES DEL PROGRAMA
-    # ------------------------------------------------------------
+
 
     def buscar_postre(self, nombre):
         for p in self.postres:
@@ -202,10 +189,6 @@ class App:
             lista = "\n- ".join(ingredientes)
             messagebox.showinfo("Ingredientes", f"Ingredientes de '{nombre}':\n- {lista}")
 
-
-# ------------------------------------------------------------
-#   EJECUCIÓN DEL PROGRAMA
-# ------------------------------------------------------------
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -1,9 +1,5 @@
-# ============================================================
-#   eliminar_repetidos.py
-#   Subprograma para eliminar postres duplicados
-# ============================================================
 
-from gestor_postres import Postre, ListaIngredientes
+from gestor_postres import Postre
 
 def eliminar_repetidos(lista_postres):
     """Elimina postres duplicados (mismo nombre) de la lista."""
@@ -14,11 +10,11 @@ def eliminar_repetidos(lista_postres):
             nombres_vistos.add(p.nombre.lower())
             lista_limpia.append(p)
         else:
-            print(f"🔁 Eliminando duplicado: {p.nombre}")
+            print(f"Eliminando duplicado: {p.nombre}")
     return lista_limpia
 
 
-# --- Prueba rápida ---
+
 if __name__ == "__main__":
     p1 = Postre("Pastel")
     p1.ingredientes.agregar("Harina")
@@ -27,7 +23,7 @@ if __name__ == "__main__":
     p2 = Postre("Helado")
     p2.ingredientes.agregar("Leche")
 
-    p3 = Postre("Pastel")  # Duplicado
+    p3 = Postre("Pastel") 
     p3.ingredientes.agregar("Azúcar")
 
     lista = [p1, p2, p3]
