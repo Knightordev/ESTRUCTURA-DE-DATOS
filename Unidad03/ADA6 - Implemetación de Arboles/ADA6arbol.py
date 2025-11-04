@@ -218,9 +218,6 @@ class ArbolApp:
             texto = "Árbol vacío"
         messagebox.showinfo("Grados de los nodos", texto)
 
-    # -----------------------------
-    # DIBUJAR ÁRBOL
-    # -----------------------------
     def dibujar(self):
         self.canvas.delete("all")
         if not self.arbol.raiz:
