@@ -2,9 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 from collections import deque
 
-# ------------------------------------------------------------
-# CLASE NODO
-# ------------------------------------------------------------
 class Nodo:
     def __init__(self, dato):
         self.dato = dato
@@ -12,9 +9,6 @@ class Nodo:
         self.der = None
 
 
-# ------------------------------------------------------------
-# CLASE ÁRBOL BINARIO DE BÚSQUEDA
-# ------------------------------------------------------------
 class ArbolBinarioBusqueda:
     def __init__(self):
         self.raiz = None
@@ -284,10 +278,6 @@ class ArbolApp:
 
         _dibujar(self.arbol.raiz, 475, 50, 200)
 
-
-# ------------------------------------------------------------
-# PROGRAMA PRINCIPAL
-# ------------------------------------------------------------
 if __name__ == "__main__":
     root = tk.Tk()
     app = ArbolApp(root)
