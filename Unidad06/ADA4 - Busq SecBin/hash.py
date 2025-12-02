@@ -328,14 +328,14 @@ cada cosa, sin tener que hojear todo el libro.
 ║              ¿POR QUÉ USAR BÚSQUEDA HASH?                        ║
 ╚══════════════════════════════════════════════════════════════════╝
 
-✅ VENTAJAS:
+VENTAJAS:
 • Búsqueda en O(1) - TIEMPO CONSTANTE
 • No importa si hay 10 o 10,000,000 de usuarios
 • Siempre toma 1 operación
 • Ideal para claves únicas (emails, IDs, usernames)
 • Usado en: Bases de datos, caché, autenticación
 
-📊 COMPARACIÓN:
+COMPARACIÓN:
    Usuarios    │  Secuencial  │   Binaria   │    Hash
    ───────────────────────────────────────────────────
         10     │      5       │      4      │     1
@@ -347,16 +347,16 @@ cada cosa, sin tener que hojear todo el libro.
 ║           ¿SE PUEDE MEJORAR CON OTRO MÉTODO?                     ║
 ╚══════════════════════════════════════════════════════════════════╝
 
-❌ NO - La búsqueda hash es el método MÁS RÁPIDO posible para
+NO - La búsqueda hash es el método MÁS RÁPIDO posible para
 búsquedas por clave única.
 
-⚠️  CONSIDERACIONES:
+CONSIDERACIONES:
 • Requiere más memoria que otros métodos
 • No mantiene orden (no puedes listar "en orden alfabético")
 • Puede haber colisiones (dos claves con mismo hash)
 • Python maneja colisiones automáticamente
 
-🔄 ALTERNATIVAS (para casos específicos):
+ALTERNATIVAS (para casos específicos):
 • Si necesitas ORDEN: Árbol binario balanceado (O(log n))
 • Si necesitas RANGO: Búsqueda binaria (O(log n))
 • Si tienes POCOS datos: Búsqueda secuencial (O(n))
@@ -365,10 +365,10 @@ búsquedas por clave única.
 ║                      CONCLUSIONES                                ║
 ╚══════════════════════════════════════════════════════════════════╝
 
-📌 COMPLEJIDAD TEMPORAL: O(1) - tiempo constante
-📌 COMPLEJIDAD ESPACIAL: O(n) - necesita espacio para la tabla
+COMPLEJIDAD TEMPORAL: O(1) - tiempo constante
+COMPLEJIDAD ESPACIAL: O(n) - necesita espacio para la tabla
 
-✨ USOS REALES:
+USOS REALES:
 • Sistemas de autenticación (login)
 • Bases de datos (índices)
 • Caché de aplicaciones
@@ -376,13 +376,13 @@ búsquedas por clave única.
 • Almacenamiento de sesiones
 • DNS (resolución de dominios)
 
-💡 CUÁNDO USARLA:
+CUÁNDO USARLA:
 • Tienes una clave ÚNICA (email, ID, username)
 • Necesitas velocidad máxima
 • No te importa el orden de los datos
 • Haces MUCHAS búsquedas
 
-❌ CUÁNDO NO USARLA:
+CUÁNDO NO USARLA:
 • Necesitas mantener orden
 • Necesitas búsquedas por rango
 • Tienes muy pocos datos (< 10)
@@ -392,7 +392,7 @@ búsquedas por clave única.
 ║                    ANALOGÍA DEL MUNDO REAL                       ║
 ╚══════════════════════════════════════════════════════════════════╝
 
-🏢 EDIFICIO DE APARTAMENTOS:
+EDIFICIO DE APARTAMENTOS:
 • Cada apartamento tiene un número ÚNICO (email)
 • No buscas tocando todas las puertas
 • Vas DIRECTO al apartamento #305
@@ -400,7 +400,7 @@ búsquedas por clave única.
 
 vs.
 
-📚 BIBLIOTECA SIN SISTEMA:
+BIBLIOTECA SIN SISTEMA:
 • Búsqueda secuencial = revisar libro por libro
 • Búsqueda binaria = ir por secciones dividiendo
 • Hash = saber EXACTAMENTE en qué estante está
@@ -421,32 +421,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-"""
-╔══════════════════════════════════════════════════════════════════╗
-║                  DOCUMENTACIÓN DEL CÓDIGO                        ║
-╚══════════════════════════════════════════════════════════════════╝
-
-ESTRUCTURA:
-• BusquedaHash: Clase principal con la tabla hash
-• buscar(): Método de búsqueda O(1)
-• agregar_usuario(): Agregar nuevos usuarios
-• eliminar_usuario(): Eliminar usuarios existentes
-• buscar_por_plan(): Búsqueda por criterio adicional
-• menu(): Interfaz interactiva
-
-COMPLEJIDAD:
-• Búsqueda:    O(1) - tiempo constante
-• Inserción:   O(1) - tiempo constante
-• Eliminación: O(1) - tiempo constante
-• Espacio:     O(n) - proporcional al número de usuarios
-
-PARA EJECUTAR:
-$ python busqueda_hash.py
-
-PARA GITHUB:
-$ git add busqueda_hash.py
-$ git commit -m "Implementación de búsqueda hash"
-$ git push origin main
-"""
