@@ -56,34 +56,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-"""
-EXPLICACIÓN DEL EJERCICIO:
-
-1. ¿En qué consiste?
-   - Sistema de inventario donde los productos se almacenan en orden de llegada
-   - Busca productos por código sin importar el orden
-   - Recorre elemento por elemento hasta encontrar el código buscado
-
-2. ¿Por qué usar búsqueda secuencial?
-   - El inventario NO está ordenado (productos llegan aleatoriamente)
-   - Es imposible usar búsqueda binaria en datos desordenados
-   - Cada búsqueda debe revisar elemento por elemento
-   - Ideal cuando el orden no importa o no se puede mantener
-
-3. ¿Se puede mejorar con otro método?
-   - SÍ, con un diccionario (hash table):
-     * inventario_dict = {prod['codigo']: prod for prod in inventario}
-     * Búsqueda en O(1) en vez de O(n)
-   - O con búsqueda binaria SI ordenamos primero:
-     * Costo: O(n log n) para ordenar + O(log n) por búsqueda
-     * Solo vale la pena si haremos MUCHAS búsquedas
-
-4. CONCLUSIONES:
-   - Complejidad temporal: O(n) - revisa hasta n elementos
-   - Complejidad espacial: O(1) - no usa memoria extra
-   - Ventajas: Simple, funciona en cualquier lista, no requiere ordenamiento
-   - Desventajas: Lento para listas grandes (peor caso: n comparaciones)
-   - Uso real: Listas pequeñas, datos desordenados, búsquedas poco frecuentes
-"""
