@@ -1,12 +1,3 @@
-"""
-EJERCICIO 2: BÚSQUEDA BINARIA
-Sistema de Biblioteca con Libros Ordenados por ISBN
-
-Descripción:
-Biblioteca digital con catálogo ordenado por ISBN que permite búsquedas
-rápidas de libros. Los ISBNs están ordenados numéricamente.
-"""
-
 def busqueda_binaria(lista, isbn_buscado):
     izquierda = 0
     derecha = len(lista) - 1
@@ -113,44 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-"""
-EXPLICACIÓN DEL EJERCICIO:
-
-1. ¿En qué consiste?
-   - Sistema de biblioteca con catálogo ordenado por ISBN
-   - Búsqueda dividiendo el espacio de búsqueda a la mitad en cada paso
-   - Compara con el elemento medio y descarta la mitad incorrecta
-
-2. ¿Por qué usar búsqueda binaria?
-   - El catálogo ESTÁ ORDENADO por ISBN (requisito fundamental)
-   - Extremadamente eficiente: reduce búsquedas exponencialmente
-   - En 10 elementos máximo 4 comparaciones vs 10 en secuencial
-   - En 1,000,000 elementos máximo 20 comparaciones vs 1,000,000
-   - Ideal para catálogos grandes con consultas frecuentes
-
-3. ¿Se puede mejorar con otro método?
-   - Para UNA búsqueda: NO, es óptima para listas ordenadas
-   - Para MUCHAS búsquedas: SÍ, usar hash table (diccionario):
-     * biblioteca_dict = {libro['isbn']: libro for libro in biblioteca}
-     * O(1) constante en vez de O(log n)
-   - Árbol binario de búsqueda balanceado:
-     * Mantiene orden Y permite O(log n) en búsqueda/inserción/eliminación
-   - Interpolación si ISBNs tienen distribución uniforme
-
-4. CONCLUSIONES:
-   - Complejidad temporal: O(log n) - divide lista a la mitad cada vez
-   - Complejidad espacial: O(1) iterativa, O(log n) recursiva (pila)
-   - REQUISITO CRÍTICO: Lista debe estar ordenada
-   - Ventajas: Muy rápida en listas grandes, eficiente en memoria
-   - Desventajas: Requiere ordenamiento previo O(n log n)
-   - Comparación: 1M elementos = 20 comparaciones vs 500,000 promedio secuencial
-   - Uso real: Bases de datos, diccionarios, índices, sistemas de archivos
-   
-   EJEMPLO PRÁCTICO:
-   - Lista de 1,024 elementos:
-     * Búsqueda secuencial: hasta 1,024 comparaciones (promedio 512)
-     * Búsqueda binaria: máximo 10 comparaciones
-   - ¡Más de 100x más rápida!
-"""
