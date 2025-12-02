@@ -1,23 +1,4 @@
-"""
-EJERCICIO 1: BÚSQUEDA SECUENCIAL
-Sistema de Inventario de Productos
-
-Descripción:
-Sistema que busca productos en un inventario desordenado donde los productos
-llegan en orden aleatorio según las compras realizadas.
-"""
-
 def busqueda_secuencial(lista, elemento_buscado):
-    """
-    Busca un elemento en una lista de forma secuencial.
-    
-    Args:
-        lista: Lista donde buscar
-        elemento_buscado: Elemento a encontrar
-    
-    Returns:
-        Índice del elemento si se encuentra, -1 si no existe
-    """
     comparaciones = 0
     
     for i in range(len(lista)):
